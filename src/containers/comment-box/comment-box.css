@@ -1,0 +1,25 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+
+	padding: 15px;
+	background-color: var(--lightest-color);
+	border: var(--border-style-light);
+	border-radius: var(--rounded-border-radius);
+	caret-color: transparent;
+}
+
+.title {
+	font-size: var(--large-font-size);
+	padding-bottom: 5px;
+}
+
+.label {
+	font-size: var(--small-font-size);
+}
+
+.buttonContainer {
+	display: flex;
+	justify-content: flex-end;
+}

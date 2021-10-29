@@ -1,0 +1,50 @@
+:root {
+	--background-color: #fff;
+	--font-color: #212121;
+	--font-light-color: rgba(61, 66, 70, 0.8);
+	--dark-color: #424242;
+	--light-color: #9E9E9E;
+	--lightest-color: rgb(243, 243, 243);
+	--accent-color: #B39DDB;
+	--accent-dark-color: #9575CD;
+	
+	--large-font-size: 1.5rem;
+	--small-font-size: 0.75rem;
+
+	--page-padding-horizontal: 10%;
+
+	--border-style: 2px solid;
+	--border-style-light: var(--border-style) var(--lightest-color);
+	--round-border-radius: 20px;
+	--rounded-border-radius: 8px;
+	--half-rounded-border-radius: 4px;
+}
+
+html {
+	font-family: Arial, Helvetica, sans-serif;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	background-color: var(--background-color);
+}
+
+*, *:before, *:after {
+	-webkit-box-sizing: inherit;
+	-moz-box-sizing: inherit;
+	box-sizing: inherit;
+}
+
+main {
+	color: var(--font-color);
+	padding: 0rem var(--page-padding-horizontal);
+}
+
+main .main-content {
+	padding: 1rem 0rem;
+}
+
+.column-content-container {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}

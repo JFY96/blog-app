@@ -1,0 +1,16 @@
+.btn {
+	padding: 10px 20px;
+	font-weight: 600;
+	color: var(--font-light-color);
+	border: 0.1px solid var(--font-light-color);
+	border-radius: var(--round-border-radius);
+	cursor: pointer;
+	user-select: none;
+	background-color: var(--background-color);
+}
+
+.btn:hover {
+	background-color: var(--accent-color);
+	color: var(--font-color);
+	border-color: var(--font-color);
+}

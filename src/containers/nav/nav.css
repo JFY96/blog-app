@@ -1,0 +1,33 @@
+.nav {
+	display: flex;
+	justify-content: space-between;
+	padding: 0rem var(--page-padding-horizontal);
+	color: var(--font-color);
+	border-bottom: var(--border-style-light);
+}
+
+.nav__logo {
+	align-self: center;
+	font-size: var(--large-font-size);
+}
+
+.nav__list {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.nav__list__item {
+	display: flex;
+	justify-content: center;
+	padding: 15px 20px 20px;
+	color: var(--font-light-color);
+	text-decoration: none;
+}
+
+.nav__list__item:visited {
+	color: inherit;
+}
+
+.nav__list__item:hover {
+	color: var(--font-color);
+}
