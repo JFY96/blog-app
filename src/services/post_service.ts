@@ -1,57 +1,31 @@
-import { Post, Comment } from '@customTypes/interfaces';
+import { Post, PostData } from '@customTypes/interfaces';
+import { axiosInstance } from '@contexts/authContext';
 
-// Use fake examples for now
-export const postExamples:Array<Post> = [
-	{
-		id: '1',
-		title: 'Lorem ipsum dolor sit amet',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-		timestamp: 1635010009000,
-		commentCount: 0,
-	},
-	{
-		id: '2',
-		title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-		timestamp: 1635010009000,
-		commentCount: 27,
-	},
-	{
-		id: '3',
-		title: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-		timestamp: 1635010009000,
-		commentCount: 3,
-	},
-];
+class PostService {
+	/*
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	*/
+	static mapPostData = (postData: PostData):Post => {
+		return {
+			id: postData._id,
+			title: postData.title,
+			content: postData.content,
+			timestamp: postData.unixTimestamp,
+			commentCount: 0, // TODO
+		};
+	};
 
-export const commentExamples:Array<Comment> = [
-	{
-		id: '1',
-		postId: '1',
-		name: 'Tom',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-		timestamp: 1635010009000,
-	},
-	{
-		id: '2',
-		postId: '1',
-		name: 'Tom',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-		timestamp: 1635010009000,
-	},
-	{
-		id: '3',
-		postId: '1',
-		name: 'Tom',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-		timestamp: 1635010009000,
-	},
-	{
-		id: '4',
-		postId: '1',
-		name: 'Tom',
-		content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-		timestamp: 1635010009000,
-	},
-];
+	static getPosts = async ():Promise<Post[]> => {
+		const { data } = await axiosInstance.get<{ success: boolean, posts:PostData[] }>('posts');
+		if (data.success) return data.posts.map(postData => this.mapPostData(postData));
+		else return [];
+	};
+
+	static getPost = async (postId: string):Promise<Post> => {
+		const { data } = await axiosInstance.get<{ success: boolean, post: PostData }>(`posts/${postId}`);
+		return this.mapPostData(data.post);
+	};
+	
+}
+
+export default PostService;

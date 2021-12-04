@@ -7,7 +7,7 @@ interface TextFieldProps {
 	[x:string]: any,
 }
 
-const TextField = ({ text, otherProps }: TextFieldProps) => {
+const TextField = ({ text, ...otherProps }: TextFieldProps) => {
 	return (
 		<input type="text"
 			className={styles.input}

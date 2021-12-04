@@ -7,7 +7,7 @@ interface ButtonProps {
 	[x:string]: any,
 }
 
-const Button = ({ text, otherProps }:ButtonProps) => {
+const Button = ({ text, ...otherProps }:ButtonProps) => {
 	return (
 		<button type="button"
 			className={styles.btn}

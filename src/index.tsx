@@ -1,12 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import Routes from './routes';
-import '@global/style.scss';
+import App from './app';
+import '@global/root.scss';
+import { AuthProvider } from '@contexts/authContext';
 
 render(
 	<React.StrictMode>
-		<Routes/>
+		<AuthProvider>
+			<App />
+		</AuthProvider>
 	</React.StrictMode>,
   document.getElementById('root')
 );

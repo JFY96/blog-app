@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
-module.exports = {
+module.exports = (env) => ({
 	entry: './src/index.tsx',
 	output: {
 		filename: 'main.js',
@@ -18,6 +19,8 @@ module.exports = {
 			'@pages': path.resolve(__dirname, 'src/pages'),
 			'@customTypes': path.resolve(__dirname, 'src/types'),
 			'@services': path.resolve(__dirname, 'src/services'),
+			'@hooks': path.resolve(__dirname, 'src/hooks'),
+			'@contexts': path.resolve(__dirname, 'src/contexts'),
 		},
 		extensions: ['.ts', '.tsx', '.js']
 	},
@@ -30,7 +33,7 @@ module.exports = {
 				use: {
 					loader: "babel-loader",
 					options: {
-						presets: ['@babel/preset-typescript', '@babel/preset-react']
+						presets: ['@babel/preset-typescript', '@babel/preset-react'],
 					},
 				}
 			},
@@ -40,7 +43,12 @@ module.exports = {
 					// Creates `style` nodes from JS strings
 					"style-loader",
 					// Translates CSS into CommonJS
-					"css-loader",
+					{
+						loader: "css-loader",
+						options: {
+							modules: true,	
+						},
+					},
 					// Compiles Sass to CSS
 					"sass-loader",
 				],
@@ -66,5 +74,8 @@ module.exports = {
 		new HtmlWebPackPlugin({
 		  template: './src/index.html',
 		}),
+		new Dotenv({
+			path: `.env${env.ENVIRONMENT ? `.${env.ENVIRONMENT}` : ''}`
+		}),
 	]
-};
+});

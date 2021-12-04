@@ -4,6 +4,7 @@
 	padding: 0rem var(--page-padding-horizontal);
 	color: var(--font-color);
 	border-bottom: var(--border-style-light);
+	caret-color: transparent;
 }
 
 .nav__logo {
@@ -17,10 +18,9 @@
 }
 
 .nav__list__item {
-	display: flex;
-	justify-content: center;
+	cursor: pointer;
 	padding: 15px 20px 20px;
-	color: var(--font-light-color);
+	color: var(--font-light-color) !important;
 	text-decoration: none;
 }
 
@@ -29,5 +29,5 @@
 }
 
 .nav__list__item:hover {
-	color: var(--font-color);
+	color: var(--font-color) !important;
 }

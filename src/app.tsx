@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Nav from '@containers/nav/nav';
@@ -6,8 +6,14 @@ import HomePage from '@pages/home-page/home-page';
 import LoginPage from '@pages/login-page/login-page';
 import PostPage from '@pages/post-page/post-page';
 import NotFoundPage from '@pages/not-found-page/not-found-page';
+import { useAuth } from '@contexts/authContext';
 
-const Routes = () => {
+const App = () => {
+	const { refreshLogin } = useAuth();
+	useEffect(() => {
+		refreshLogin();
+	}, []);
+
 	return (
 		<BrowserRouter>
 			<Nav />
@@ -23,4 +29,4 @@ const Routes = () => {
 	);
 };
 
-export default Routes;
+export default App;
