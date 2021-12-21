@@ -14,6 +14,7 @@ interface AuthProviderProps {
 interface AuthContextValue {
 	loggedIn: boolean,
 	username: string,
+	isAdmin: boolean,
 	userLogin: (username: string, password: string) => any,
 	refreshLogin: () => any,
 	userLogout: () => any,
@@ -24,6 +25,7 @@ type loginResponse = {
 	error?: string,
 	user?: string,
 	token?: string,
+	admin?: boolean,
 };
 
 type logoutResponse = {
@@ -46,6 +48,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	const accessTokenRef = useRef<string>();
 	const [loggedIn, setLoggedIn] = useState<boolean>(false);
 	const [username, setUsername] = useState<string>('');
+	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
 	const loginPost = async (path: string, username?: string, password?: string): Promise<{ success: boolean, error: string }> => {
 		let error = '';
@@ -56,6 +59,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 				// set login, token
 				setLoggedIn(true);
 				setUsername(result.data?.user ?? '');
+				setIsAdmin(result.data?.admin ?? false);
 				accessTokenRef.current = result.data?.token ?? '';
 			} else {
 				error = result.data?.error ?? '';
@@ -88,6 +92,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 				// reset login, token
 				setLoggedIn(false);
 				setUsername('');
+				setIsAdmin(false);
 				accessTokenRef.current = '';
 			} else {
 				error = result.data?.error ?? '';
@@ -124,7 +129,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 				const originalConfig = err.config;
 		
 				if (originalConfig.url && !['auth/login', 'auth/refresh_token'].includes(originalConfig.url) && err.response) {
-					console.log(err.response.status, originalConfig);
 					if (err.response.status === 401 && !originalConfig.retry) {
 						originalConfig.retry = true; // prevent infinite loop
 						try {
@@ -145,6 +149,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		<AuthContext.Provider value={{
 			loggedIn,
 			username,
+			isAdmin,
 			userLogin,
 			refreshLogin,
 			userLogout,

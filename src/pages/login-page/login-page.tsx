@@ -43,6 +43,7 @@ const LoginPage = () => {
 						<label className={styles.label}>Password</label>
 						<TextField 
 							text={password}
+							fieldType='password'
 							onChange={(event:React.ChangeEvent<HTMLInputElement>) => setPassword(event.currentTarget.value)}
 						/>
 						<div className={styles.buttonContainer}>

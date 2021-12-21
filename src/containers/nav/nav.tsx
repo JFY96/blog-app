@@ -5,7 +5,7 @@ import styles from './nav.css';
 import { useAuth } from '@contexts/authContext';
 
 const Nav = () => {
-	const { loggedIn, userLogout } = useAuth();
+	const { loggedIn, isAdmin, userLogout } = useAuth();
 	return (
 		<nav className={styles.nav}>
 			<div className={styles.nav__logo}>Blog</div>
@@ -19,12 +19,19 @@ const Nav = () => {
 					Login
 				</Link>
 				:
-				<span
-					className={styles.nav__list__item} 
-					onClick={userLogout}
-				>
-					Logout
-				</span>
+				<>
+					{isAdmin &&
+					<Link className={styles.nav__list__item} to='/admin'>
+						Admin
+					</Link>
+					}
+					<span
+						className={styles.nav__list__item} 
+						onClick={userLogout}
+					>
+						Logout
+					</span>
+				</>
 				}
 			</div>
 		</nav>

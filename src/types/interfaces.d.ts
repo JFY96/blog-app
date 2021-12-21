@@ -4,6 +4,8 @@ export interface Post {
 	content: string,
 	timestamp: number,
 	commentCount: number,
+	date: string,
+	published?: boolean,
 }
 
 export interface PostData {
@@ -11,6 +13,7 @@ export interface PostData {
 	title: string,
 	content: string,
 	unixTimestamp: number,
+	published?: boolean,
 	[x:string]: any,
 }
 

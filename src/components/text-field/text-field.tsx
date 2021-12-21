@@ -4,12 +4,13 @@ import styles from './text-field.css';
 
 interface TextFieldProps {
 	text: string,
+	fieldType?: string,
 	[x:string]: any,
 }
 
-const TextField = ({ text, ...otherProps }: TextFieldProps) => {
+const TextField = ({ text, fieldType = 'text',...otherProps }: TextFieldProps) => {
 	return (
-		<input type="text"
+		<input type={fieldType}
 			className={styles.input}
 			value={text}
 			{...otherProps}

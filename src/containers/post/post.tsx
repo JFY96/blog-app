@@ -19,7 +19,7 @@ const Post = (props: PostProps) => {
 					<ConditionalLink to={`/post/${post.id}`} className={styles.header__link} condition={preview}>
 						<div className={styles.header__title}>{post.title}</div>
 					</ConditionalLink>
-					<div className={styles.header__date}>{new Date(post.timestamp).toLocaleDateString()}</div>
+					<div className={styles.header__date}>{post.date}</div>
 				</div>
 				<div className={styles.content}>{post.content}</div>
 				{preview &&
