@@ -9,7 +9,7 @@ interface ButtonProps {
 
 const Button = ({ text, ...otherProps }:ButtonProps) => {
 	return (
-		<button type="button"
+		<button type='button'
 			className={styles.btn}
 			{...otherProps}
 		>

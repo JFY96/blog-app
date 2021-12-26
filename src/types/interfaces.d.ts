@@ -32,3 +32,8 @@ export interface CommentData {
 	unixTimestamp: number,
 	[x:string]: any,
 }
+
+export interface ApiMethodReturn {
+	success: boolean,
+	errors?: String[] | undefined
+};

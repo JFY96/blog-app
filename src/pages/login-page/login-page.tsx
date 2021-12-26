@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 
 import { Button, TextField } from '@components';
-import formStyles from '@global/formStyle.scss';
-import containerStyles from '@global/styles.scss';
 import { useAuth } from '@contexts/authContext';
 
-const styles = { ...formStyles, ...containerStyles };
+import containerStyles from '@global/styles.scss';
+import formStyles from '@global/formStyle.scss';
+const styles = { ...containerStyles, ...formStyles };
 
 const LoginPage = () => {
 	const { loggedIn, username, userLogin } = useAuth();
@@ -50,7 +50,7 @@ const LoginPage = () => {
 							<span className={error ? styles.error : styles.success}>
 								{error}
 							</span>
-							<Button type='button'
+							<Button
 								text='Log In'
 								onClick={loginUser}
 							/>

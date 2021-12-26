@@ -1,4 +1,4 @@
-import { Comment, CommentData } from "@customTypes/interfaces";
+import { Comment, CommentData, ApiMethodReturn } from '@customTypes/interfaces';
 import { axiosInstance } from '@contexts/authContext';
 
 class CommentService {
@@ -18,7 +18,7 @@ class CommentService {
 		return data.comments.map(comment => this.mapCommentData(comment));
 	};
 
-	static addComment = async (postId: string, comment: string, name: string):Promise<{ success: boolean, errors?: String[] | undefined }> => {
+	static addComment = async (postId: string, comment: string, name: string): Promise<ApiMethodReturn> => {
 		const { data } = await axiosInstance.post<{ success: boolean, errors?: any, [x:string]:any }>(
 			`posts/${postId}/comments`,
 			{ name, content: comment }

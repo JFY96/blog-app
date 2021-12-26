@@ -8,6 +8,7 @@ import PostPage from '@pages/post-page/post-page';
 import NotFoundPage from '@pages/not-found-page/not-found-page';
 import AdminPage from '@pages/admin-page/admin-page';
 import { useAuth } from '@contexts/authContext';
+import EditPostPage from '@pages/edit-post-page/edit-post-page';
 
 const App = () => {
 	const { isAdmin, refreshLogin } = useAuth();
@@ -24,6 +25,8 @@ const App = () => {
 					<Route exact path='/' component={HomePage} />
 					<Route exact path='/login' component={LoginPage} />
 					<Route path='/post/:postId' children={<PostPage />} />
+					<Route path='/new-post' children={<EditPostPage />} />
+					<Route path='/edit-post/:postId' children={<EditPostPage />} />
 					{isAdmin &&
 					<Route exact path='/admin' component={AdminPage} />
 					}

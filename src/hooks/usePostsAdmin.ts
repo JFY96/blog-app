@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 
-import { Comment } from "@customTypes/interfaces";
-import CommentService from "@services/comment_service";
+import { Post } from "@customTypes/interfaces";
+import PostService from "@services/post_service";
 
-const useComments = (postId: string) => {
-
-	const [data, setData] = useState<Comment[]>();
+const usePostsAdmin = () => {
+	const [data, setData] = useState<Post[]>();
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<any>(); // cannot have typed catch variables
 
 	const getData = async () => {
 		try {
-			const result = await CommentService.getComments(postId);
+			const result = await PostService.getPostsAll();
 			setData(result);
 		} catch (err) {
 			setError(err);
@@ -19,14 +18,14 @@ const useComments = (postId: string) => {
 			setIsLoading(false);
 		}
 	};
-	
+
 	useEffect(() => {
 		getData();
 	}, []);
 
-	const add = async (comment: string, name: string = '') => {
+	const publish = async (postId: string, publish = true) => {
 		try {
-			const result = await CommentService.addComment(postId, comment, name);
+			const result = await PostService.publishPost(postId, publish);
 			if (result.success) getData();
 			return result;
 		} catch (err) {
@@ -38,8 +37,8 @@ const useComments = (postId: string) => {
 		data,
 		isLoading,
 		error,
-		add,
+		publish,
 	};
 };
 
-export default useComments;
+export default usePostsAdmin;

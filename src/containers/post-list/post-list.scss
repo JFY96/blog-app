@@ -29,3 +29,15 @@
 .row__column-item--main-content {
 	flex: 1;
 }
+
+.row__column-item--with-button {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.icon {
+	&:hover {
+		cursor: pointer;
+	}
+}

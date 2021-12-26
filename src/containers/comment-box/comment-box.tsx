@@ -55,7 +55,7 @@ const CommentBox = ({ add }:CommentBoxProps) => {
 				<span className={error ? styles.error : styles.success}>
 					{error || message}
 				</span>
-				<Button type='button'
+				<Button
 					text='Submit'
 					onClick={addComment}
 				/>
