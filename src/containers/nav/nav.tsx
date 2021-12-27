@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-import styles from './nav.css';
+import styles from './nav.scss';
 import { useAuth } from '@contexts/authContext';
 
 const Nav = () => {

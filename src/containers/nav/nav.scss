@@ -22,12 +22,12 @@
 	padding: 15px 20px 20px;
 	color: var(--font-light-color) !important;
 	text-decoration: none;
-}
-
-.nav__list__item:visited {
-	color: inherit;
-}
-
-.nav__list__item:hover {
-	color: var(--font-color) !important;
+	
+	&:visited {
+		color: inherit;
+	}
+	
+	&:hover {
+		color: var(--font-color) !important;
+	}
 }

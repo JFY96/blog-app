@@ -21,6 +21,7 @@ const EditPostPage = () => {
 
 	const getPostInfo = async () => {
 		// Get Post
+		setIsLoading(true);
 		const result = await PostService.getPost(postId ?? '');
 		if (result) {
 			setTitle(result.title);
@@ -30,27 +31,24 @@ const EditPostPage = () => {
 	};
 	
 	useEffect(() => {
-		if (!postId) {
-			// Add Post
-			setIsLoading(false);
-			if (!loggedIn) {
-				setError('Not authorized to create post');
-				return;
-			}
-		}
-		
-		// Edit Post
+		// Check User Logged In
+		setError('');
 		if (!loggedIn) {
-			setError('Not authorized to edit this post');
 			setIsLoading(false);
+			setError(`Not authorized to ${postId ? 'edit this' : 'create new'} post`);
 			return;
 		}
 
-		// Check User Allowed to View?
-		
-		// Get Post
-		getPostInfo();
-	}, []);
+		if (postId) { // Edit Post
+			// Check User Allowed to View?
+			
+			// Get Post
+			getPostInfo();
+		} else { // Add Post
+			setIsLoading(false);
+		}
+
+	}, [loggedIn]);
 
 	return (
 		<div className={styles['main-content']}>

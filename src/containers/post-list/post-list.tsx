@@ -1,6 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ToggleOffRoundedIcon from '@mui/icons-material/ToggleOffRounded';
 import ToggleOnRoundedIcon from '@mui/icons-material/ToggleOnRounded';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
 import styles from './post-list.scss';
 import usePostsAdmin from '@hooks/usePostsAdmin';
@@ -21,9 +24,17 @@ const PostList = (props: PostProps) => {
 			:
 			<>
 				<div className={`${styles.row} ${styles['row--header']}`}>
-					<div className={styles['row__column-item']}>Date</div>
-					<div className={`${styles['row__column-item']} ${styles['row__column-item--main-content']}`}>Title</div>
-					<div className={styles['row__column-item']}>Publish</div>
+					<div className={styles['row__column-item']}>
+						<Link to='/new-post'>
+							<AddRoundedIcon
+								color='action'
+								fontSize='large'
+								className={styles.icon}
+							/>
+						</Link>
+					</div>
+					<div className={`${styles['row__column-item']} ${styles['row__column-item--main-content']}`}>Post</div>
+					<div className={styles['row__column-item']}>Publish/Edit</div>
 				</div>
 				{posts && posts.map(post => (
 					<div key={post.id} className={styles.row}>
@@ -46,6 +57,12 @@ const PostList = (props: PostProps) => {
 								onClick={() => {publish(post.id)}}
 							/>
 							}
+							<Link to={`/edit-post/${post.id}`}>
+								<EditRoundedIcon
+									color='action'
+									className={styles.icon}
+								/>
+							</Link>
 						</div>
 					</div>
 				))}

@@ -33,8 +33,7 @@ class PostService {
 		return this.mapPostData(data.post);
 	};
 
-	// TODO post the returning type out into export?
-	static updatePost = async (postId: string, body: { content?: string, published?: boolean }): Promise<ApiMethodReturn> => {
+	static updatePost = async (postId: string, body: { title?: string, content?: string, published?: boolean }): Promise<ApiMethodReturn> => {
 		const { data } = await axiosInstance.put(`posts/${postId}`, body);
 		return data?.success
 			? { success: true } 
@@ -44,7 +43,14 @@ class PostService {
 	static publishPost = async (postId: string, publish = true): Promise<ApiMethodReturn> => {
 		return this.updatePost(postId, { published: publish });
 	};
-	
+
+	static createPost = async (title: string, content: string): Promise<ApiMethodReturn> => {
+		const { data } = await axiosInstance.post('posts', { title, content });
+		return data?.success
+			? { success: true } 
+			: { success: false, errors: data?.errors };
+	};
+
 }
 
 export default PostService;
