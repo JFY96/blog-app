@@ -22,15 +22,29 @@ const App = () => {
 			<Nav />
 			<main>
 				<Switch>
-					<Route exact path='/' component={HomePage} />
-					<Route exact path='/login' component={LoginPage} />
-					<Route path='/post/:postId' children={<PostPage />} />
-					<Route path='/new-post' children={<EditPostPage />} />
-					<Route path='/edit-post/:postId' children={<EditPostPage />} />
+					<Route exact path='/'>
+						<HomePage />
+					</Route>
+					<Route exact path='/login'>
+						<LoginPage />
+					</Route>
+					<Route path='/post/:postId'>
+						<PostPage />
+					</Route>
+					<Route path='/new-post'>
+						<EditPostPage />
+					</Route>
+					<Route path='/edit-post/:postId'>
+						<EditPostPage />
+					</Route>
 					{isAdmin &&
-					<Route exact path='/admin' component={AdminPage} />
+					<Route exact path='/admin'>
+						<AdminPage />
+					</Route>
 					}
-					<Route component={NotFoundPage} />
+					<Route>
+						<NotFoundPage /> 
+					</Route>
 				</Switch>
 			</main>
 		</BrowserRouter>

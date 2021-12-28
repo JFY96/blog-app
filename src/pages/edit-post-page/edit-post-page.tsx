@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import { Button, TextField } from '@components';
 import { useAuth } from '@contexts/authContext';
@@ -11,6 +11,7 @@ const styles = { ...containerStyles, ...formStyles };
 
 const EditPostPage = () => {
 	const { postId } = useParams<{ postId?: string }>();
+	const history = useHistory();
 	const { loggedIn } = useAuth();
 
 	const [loading, setIsLoading] = useState(true);
@@ -30,9 +31,22 @@ const EditPostPage = () => {
 		setIsLoading(false);
 	};
 	
+	const savePost = async () => {
+		const result = postId
+			? await PostService.updatePost(postId, { title, content })
+			: await PostService.createPost(title, content);
+		
+		if (result.success) {
+			history.push('/admin');
+		} else {
+			setSaveError(result?.errors?.[0] ?? '');
+		}
+	};
+	
 	useEffect(() => {
 		// Check User Logged In
 		setError('');
+		setSaveError('');
 		if (!loggedIn) {
 			setIsLoading(false);
 			setError(`Not authorized to ${postId ? 'edit this' : 'create new'} post`);
@@ -76,7 +90,7 @@ const EditPostPage = () => {
 						</span>
 						<Button
 							text='Save'
-							onClick={() =>{/* TODO */}}
+							onClick={savePost}
 						/>
 					</div>
 					</>

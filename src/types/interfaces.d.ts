@@ -35,6 +35,6 @@ export interface CommentData {
 
 export interface ApiMethodReturn {
 	success: boolean,
-	error?: String | undefined,
-	errors?: String[] | undefined,
+	error?: string | undefined,
+	errors?: string[] | undefined,
 };
