@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 import { ConditionalLink } from '@components';
 import { Post as PostInterface } from '@customTypes/interfaces';
@@ -21,7 +22,9 @@ const Post = (props: PostProps) => {
 					</ConditionalLink>
 					<div className={styles.header__date}>{post.date}</div>
 				</div>
-				<div className={styles.content}>{post.content}</div>
+				<div className={styles.content}>
+					<ReactMarkdown children={post.content} />
+				</div>
 				{preview &&
 				<div className={styles.footer}>
 					<span className={styles.footer__commentCount}>Comments: {post.commentCount}</span>

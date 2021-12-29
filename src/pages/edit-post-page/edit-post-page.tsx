@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
-import { Button, TextField } from '@components';
+import { Button, TextArea, TextField } from '@components';
 import { useAuth } from '@contexts/authContext';
 
 import containerStyles from '@global/styles.scss';
@@ -23,23 +24,32 @@ const EditPostPage = () => {
 	const getPostInfo = async () => {
 		// Get Post
 		setIsLoading(true);
-		const result = await PostService.getPost(postId ?? '');
-		if (result) {
-			setTitle(result.title);
-			setContent(result.content);
+		try {
+			const result = await PostService.getPost(postId ?? '');
+			if (result) {
+				setTitle(result.title);
+				setContent(result.content);
+			}
+			setIsLoading(false);
+		} catch {
+			setError('Failed to fetch post');
+			setIsLoading(false);
 		}
-		setIsLoading(false);
 	};
 	
 	const savePost = async () => {
-		const result = postId
-			? await PostService.updatePost(postId, { title, content })
-			: await PostService.createPost(title, content);
-		
-		if (result.success) {
-			history.push('/admin');
-		} else {
-			setSaveError(result?.errors?.[0] ?? '');
+		try {
+			const result = postId
+				? await PostService.updatePost(postId, { title, content })
+				: await PostService.createPost(title, content);
+			
+			if (result.success) {
+				history.push('/admin');
+			} else {
+				setSaveError(result?.errors?.[0] ?? '');
+			}
+		} catch {
+			setSaveError('Failed to save, please try again.');
 		}
 	};
 	
@@ -79,9 +89,10 @@ const EditPostPage = () => {
 						text={title}
 						onChange={(event:React.ChangeEvent<HTMLInputElement>) => setTitle(event.currentTarget.value)}
 					/>
-					<label className={styles.label}>Content</label>
-					<TextField 
+					<label className={styles.label}>Content (supports Markdown syntax)</label>
+					<TextArea
 						text={content}
+						rows={25}
 						onChange={(event:React.ChangeEvent<HTMLInputElement>) => setContent(event.currentTarget.value)}
 					/>
 					<div className={styles.buttonContainer}>
@@ -93,6 +104,8 @@ const EditPostPage = () => {
 							onClick={savePost}
 						/>
 					</div>
+					<label className={styles.label}>Preview</label>
+					<ReactMarkdown children={content} />
 					</>
 					}
 				</div>

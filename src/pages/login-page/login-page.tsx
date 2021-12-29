@@ -52,6 +52,7 @@ const LoginPage = () => {
 							</span>
 							<Button
 								text='Log In'
+								enterKeyClicksButton={true}
 								onClick={loginUser}
 							/>
 						</div>

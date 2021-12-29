@@ -11,7 +11,7 @@ import { useAuth } from '@contexts/authContext';
 import EditPostPage from '@pages/edit-post-page/edit-post-page';
 
 const App = () => {
-	const { isAdmin, refreshLogin } = useAuth();
+	const { isAdmin, attemptedLoginOnRefresh, refreshLogin } = useAuth();
 	
 	useEffect(() => {
 		refreshLogin();
@@ -21,6 +21,10 @@ const App = () => {
 		<BrowserRouter>
 			<Nav />
 			<main>
+			{!attemptedLoginOnRefresh
+			?
+				<span>Loading...</span>
+			:
 				<Switch>
 					<Route exact path='/'>
 						<HomePage />
@@ -46,6 +50,7 @@ const App = () => {
 						<NotFoundPage /> 
 					</Route>
 				</Switch>
+			}
 			</main>
 		</BrowserRouter>
 	);

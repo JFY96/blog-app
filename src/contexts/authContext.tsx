@@ -15,6 +15,7 @@ interface AuthContextValue {
 	loggedIn: boolean,
 	username: string,
 	isAdmin: boolean,
+	attemptedLoginOnRefresh: boolean,
 	userLogin: (username: string, password: string) => any,
 	refreshLogin: () => any,
 	userLogout: () => any,
@@ -46,6 +47,7 @@ const AuthContext = React.createContext<AuthContextValue | undefined>(undefined)
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
 	const accessTokenRef = useRef<string>();
+	const [attemptedLoginOnRefresh, setAttemptedLoginOnRefresh] = useState<boolean>(false); // Used to know when 'refreshLogin' was called (first login on refresh)
 	const [loggedIn, setLoggedIn] = useState<boolean>(false);
 	const [username, setUsername] = useState<string>('');
 	const [isAdmin, setIsAdmin] = useState<boolean>(false);
@@ -81,7 +83,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	};
 	
 	const refreshLogin = async () => {
-		return loginPost('auth/refresh_token');
+		const loginResult = await loginPost('auth/refresh_token');
+		setAttemptedLoginOnRefresh(true);
+		return loginResult;
 	};
 
 	const userLogout = async () => {
@@ -150,6 +154,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 			loggedIn,
 			username,
 			isAdmin,
+			attemptedLoginOnRefresh,
 			userLogin,
 			refreshLogin,
 			userLogout,
