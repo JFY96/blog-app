@@ -13,7 +13,7 @@ class CommentService {
 		};
 	};
 
-	static getComments = async (postId: string):Promise<Comment[]> => {
+	static getComments = async (postId: string): Promise<Comment[]> => {
 		const { data } = await axiosInstance.get<{ success: boolean, comments: CommentData[] }>(`posts/${postId}/comments`);
 		return data.comments.map(comment => this.mapCommentData(comment));
 	};

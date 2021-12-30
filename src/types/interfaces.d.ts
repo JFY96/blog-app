@@ -3,9 +3,9 @@ export interface Post {
 	title: string,
 	content: string,
 	timestamp: number,
-	commentCount: number,
 	date: string,
-	published?: boolean,
+	published: boolean,
+	commentCount?: number,
 }
 
 export interface PostData {

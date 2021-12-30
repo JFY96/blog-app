@@ -7,7 +7,7 @@ import styles from '@global/styles.scss';
 
 const HomePage = () => {
 
-	const { data, isLoading, error } = useFetch(PostService.getPosts);
+	const { data, isLoading, error } = useFetch(() => PostService.getPosts('posts?includeCount=true'));
 
 	return (
 		<div className={styles['main-content']}>
