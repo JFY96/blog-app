@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Comment as CommentInterface } from "@customTypes/interfaces";
-import styles from './comment.css';
+import styles from './comment.scss';
 
 interface CommentProps {
 	comment: CommentInterface,

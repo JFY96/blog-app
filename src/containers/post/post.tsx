@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown';
 
 import { ConditionalLink } from '@components';
 import { Post as PostInterface } from '@customTypes/interfaces';
-import styles from './post.css';
+import styles from './post.scss';
 
 interface PostProps {
 	post: PostInterface | undefined,

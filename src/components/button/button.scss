@@ -7,10 +7,10 @@
 	cursor: pointer;
 	user-select: none;
 	background-color: var(--background-color);
-}
 
-.btn:hover {
-	background-color: var(--accent-color);
-	color: var(--font-color);
-	border-color: var(--font-color);
+	&:hover {
+		background-color: var(--accent-color);
+		color: var(--font-color);
+		border-color: var(--font-color);
+	}
 }

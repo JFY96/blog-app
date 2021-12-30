@@ -8,10 +8,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import styles from './post-list.scss';
 import usePostsAdmin from '@hooks/usePostsAdmin';
 
-interface PostProps {
-};
-
-const PostList = (props: PostProps) => {
+const PostList = () => {
 	const { data: posts, isLoading, error, publish } = usePostsAdmin();
 
 	return (

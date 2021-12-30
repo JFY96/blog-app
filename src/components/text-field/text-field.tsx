@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from './text-field.css';
+import styles from './text-field.scss';
 
 interface TextFieldProps {
 	text: string,

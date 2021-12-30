@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import styles from './button.css';
+import styles from './button.scss';
 
 interface ButtonProps {
 	text: string,
