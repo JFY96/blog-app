@@ -13,6 +13,8 @@
 	border: 2px solid transparent;
 	border-radius: var(--half-rounded-border-radius);
 
+	width: 100%;
+
 	&:focus-within {
 		border-color: var(--accent-dark-color);
 		caret-color: var(--accent-dark-color);

@@ -1,6 +1,7 @@
 .container {
 	display: flex;
 	flex-direction: column;
+	gap: 0.5rem;
 	padding: 15px;
 	background-color: var(--lightest-color);
 	border-radius: var(--rounded-border-radius);
@@ -9,6 +10,13 @@
 .header {
 	display: flex;
 	justify-content: space-between;
+	align-items: flex-start;
 	font-size: var(--small-font-size);
 	padding-bottom: 10px;
+}
+
+.date-container {
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
 }

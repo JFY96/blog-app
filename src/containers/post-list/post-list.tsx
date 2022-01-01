@@ -5,8 +5,10 @@ import ToggleOnRoundedIcon from '@mui/icons-material/ToggleOnRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
-import styles from './post-list.scss';
 import usePostsAdmin from '@hooks/usePostsAdmin';
+import localStyles from './post-list.scss';
+import sharedStyles from '@global/shared.scss';
+const styles = { ...localStyles, ...sharedStyles };
 
 const PostList = () => {
 	const { data: posts, isLoading, error, publish } = usePostsAdmin();

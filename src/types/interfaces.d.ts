@@ -21,6 +21,7 @@ export interface Comment {
 	id: string,
 	postId: string,
 	name: string,
+	user: string,
 	content: string,
 	timestamp: number,
 }
@@ -29,6 +30,7 @@ export interface CommentData {
 	_id: string,
 	post: string,
 	content: string,
+	user: string,
 	unixTimestamp: number,
 	[x:string]: any,
 }

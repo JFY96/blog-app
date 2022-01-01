@@ -14,6 +14,7 @@ interface AuthProviderProps {
 interface AuthContextValue {
 	loggedIn: boolean,
 	username: string,
+	userId: string,
 	isAdmin: boolean,
 	attemptedLoginOnRefresh: boolean,
 	userLogin: (username: string, password: string) => any,
@@ -25,6 +26,7 @@ type loginResponse = {
 	success: boolean,
 	error?: string,
 	user?: string,
+	userId?: string,
 	token?: string,
 	admin?: boolean,
 };
@@ -50,6 +52,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [attemptedLoginOnRefresh, setAttemptedLoginOnRefresh] = useState<boolean>(false); // Used to know when 'refreshLogin' was called (first login on refresh)
 	const [loggedIn, setLoggedIn] = useState<boolean>(false);
 	const [username, setUsername] = useState<string>('');
+	const [userId, setUserId] = useState<string>('');
 	const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
 	const loginPost = async (path: string, username?: string, password?: string): Promise<{ success: boolean, error: string }> => {
@@ -61,6 +64,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 				// set login, token
 				setLoggedIn(true);
 				setUsername(result.data?.user ?? '');
+				setUserId(result.data?.userId ?? '');
 				setIsAdmin(result.data?.admin ?? false);
 				accessTokenRef.current = result.data?.token ?? '';
 			} else {
@@ -96,6 +100,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 				// reset login, token
 				setLoggedIn(false);
 				setUsername('');
+				setUserId('');
 				setIsAdmin(false);
 				accessTokenRef.current = '';
 			} else {
@@ -153,6 +158,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		<AuthContext.Provider value={{
 			loggedIn,
 			username,
+			userId,
 			isAdmin,
 			attemptedLoginOnRefresh,
 			userLogin,

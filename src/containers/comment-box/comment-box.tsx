@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Button, TextField } from '@components';
-// import Button from '@components/button/button';
-import styles from '@global/formStyle.scss';
+import { TextField } from '@components';
 import { useAuth } from '@contexts/authContext';
+import CommentEditSave from '@containers/comment-edit-save/comment-edit-save';
+import styles from '@global/formStyle.scss';
 
 interface CommentBoxProps {
 	add: any, // TODO
@@ -47,19 +47,13 @@ const CommentBox = ({ add }:CommentBoxProps) => {
 			</>
 			}
 			<label className={styles.label}>Comment</label>
-			<TextField
-				text={comment}
-				onChange={(event:React.ChangeEvent<HTMLInputElement>) => setComment(event.currentTarget.value)}
+			<CommentEditSave
+				comment={comment}
+				setComment={setComment}
+				error={error}
+				displayMessage={message}
+				save={addComment}
 			/>
-			<div className={styles.buttonContainer}>
-				<span className={error ? styles.error : styles.success}>
-					{error || message}
-				</span>
-				<Button
-					text='Submit'
-					onClick={addComment}
-				/>
-			</div>
 		</div>
 	);
 };

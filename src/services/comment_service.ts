@@ -8,6 +8,7 @@ class CommentService {
 			id: commentData._id,
 			postId: commentData.post,
 			name: commentData.name || 'Anonymous',
+			user: commentData.user || '',
 			content: commentData.content,
 			timestamp: commentData.unixTimestamp,
 		};
@@ -22,6 +23,16 @@ class CommentService {
 		const { data } = await axiosInstance.post<{ success: boolean, errors?: any, [x:string]:any }>(
 			`posts/${postId}/comments`,
 			{ name, content: comment }
+		);
+		return data?.success
+			? { success: true } 
+			: { success: false, errors: data?.errors };
+	};
+
+	static updateComment = async (postId: string, commentId: string, comment: string): Promise<ApiMethodReturn> => {
+		const { data } = await axiosInstance.put<{ success: boolean, errors?: any, [x:string]:any }>(
+			`posts/${postId}/comments/${commentId}`,
+			{ content: comment }
 		);
 		return data?.success
 			? { success: true } 

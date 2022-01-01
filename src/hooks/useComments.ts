@@ -33,12 +33,23 @@ const useComments = (postId: string) => {
 			setError(err);
 		}
 	};
+	
+	const update = async (commentId: string, comment: string) => {
+		try {
+			const result = await CommentService.updateComment(postId, commentId, comment);
+			if (result.success) getData();
+			return result;
+		} catch (err) {
+			setError(err);
+		}
+	};
 
 	return {
 		data,
 		isLoading,
 		error,
 		add,
+		update,
 	};
 };
 
