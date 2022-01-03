@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 
 import { Comment as CommentInterface } from "@customTypes/interfaces";
@@ -11,21 +11,13 @@ const styles = { ...localStyles, ...sharedStyles };
 interface CommentProps {
 	comment: CommentInterface,
 	editComment: boolean,
-	selectEditComment: any,
-	editCommentContent: string,
-	setEditCommentContent: any,
-	error: string,
-	saveEdit: any,
+	selectEditComment: React.MouseEventHandler<SVGSVGElement> | undefined,
 };
 
 const Comment = ({
 	comment,
 	editComment,
 	selectEditComment,
-	editCommentContent,
-	setEditCommentContent,
-	error,
-	saveEdit,
 }: CommentProps) => {
 	const { userId, isAdmin } = useAuth();
 	const canEdit = isAdmin || (userId.trim() !== '' && userId === comment.user);
@@ -47,13 +39,7 @@ const Comment = ({
 			</div>
 			{(canEdit && editComment)
 			?
-			<CommentEditSave
-				comment={editCommentContent}
-				setComment={setEditCommentContent}
-				error={error}
-				displayMessage={''}
-				save={saveEdit}
-			/>
+			<CommentEditSave id={comment.id} />
 			:
 			<div>{comment.content}</div>
 			}

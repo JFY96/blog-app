@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ForwardedRef, forwardRef } from 'react';
 
 import styles from './text-field.scss';
 
@@ -8,14 +8,15 @@ interface TextFieldProps {
 	[x:string]: any,
 }
 
-const TextField = ({ text, fieldType = 'text',...otherProps }: TextFieldProps) => {
+const TextField = forwardRef(({ text, fieldType = 'text',...otherProps }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
 	return (
 		<input type={fieldType}
 			className={styles.input}
 			value={text}
+			ref={ref}
 			{...otherProps}
 		/>
 	);
-};
+});
 
 export default TextField;

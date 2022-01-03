@@ -1,59 +1,60 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 
 import { TextField } from '@components';
 import { useAuth } from '@contexts/authContext';
 import CommentEditSave from '@containers/comment-edit-save/comment-edit-save';
-import styles from '@global/formStyle.scss';
+import formStyles from '@global/formStyle.scss';
+import sharedStyles from '@global/shared.scss';
+const styles = { ...formStyles, ...sharedStyles };
 
 interface CommentBoxProps {
-	add: any, // TODO
-}
+	name: string,
+	setName: React.Dispatch<React.SetStateAction<string>>,
+	adding: boolean,
+	selectAdding: () => any,
+	resetAdding: () => any,
+};
 
-const CommentBox = ({ add }:CommentBoxProps) => {
+const CommentBox = ({ name, setName, adding, selectAdding, resetAdding }:CommentBoxProps) => {
 	const { loggedIn } = useAuth();
-	
-	const [ name, setName ] = useState<string>('');
-	const [ comment, setComment ] = useState<string>('');
-	const [ message, setMessage ] = useState<string>('');
-	const [ error, setError ] = useState<string>('');
-	
-	const addComment = async () => {
-		setError('');
-		const result = await add(comment, name);
-		if (result.success) {
-			setName('');
-			setComment('');
-			setMessage('Comment was added!');
-		} else {
-			if (result.errors !== undefined) setError(result.errors[Object.keys(result.errors)[0]]); // Show first error - not ideal but simple solution
-			else setError('Failed to add comment.');
-		}
-	};
-
-	useEffect(() => {
-		setError('');
-	}, [name, comment]);
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.title}>Post a comment</div>
-			{!loggedIn &&
+			<div className={`${styles.title} ${styles.buttonContainer}`}>
+				Post a comment
+				{adding ?
+					<ExpandLessRoundedIcon
+						color='action'
+						fontSize='large'
+						className={styles.icon}
+						onClick={resetAdding}
+					/>
+				: 
+					<ExpandMoreRoundedIcon
+						color='action'
+						fontSize='large'
+						className={styles.icon}
+						onClick={selectAdding}
+					/>
+				}
+			</div>
+			{adding &&
 			<>
-				<label className={styles.label}>Your Name</label>
-				<TextField 
+				{!loggedIn &&
+					<>
+					<label className={styles.label}>Your Name</label>
+					<TextField 
 					text={name}
 					onChange={(event:React.ChangeEvent<HTMLInputElement>) => setName(event.currentTarget.value)}
-				/>
+					/>
+					</>
+				}
+				<label className={styles.label}>Comment</label>
+				<CommentEditSave modeIsAdd={true} />
 			</>
 			}
-			<label className={styles.label}>Comment</label>
-			<CommentEditSave
-				comment={comment}
-				setComment={setComment}
-				error={error}
-				displayMessage={message}
-				save={addComment}
-			/>
 		</div>
 	);
 };

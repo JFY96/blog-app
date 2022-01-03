@@ -2,27 +2,22 @@ import React from 'react';
 
 import { Button, TextField } from '@components';
 import styles from '@global/formStyle.scss';
+import { useCommentEdit } from '@pages/post-page/post-page';
 
 interface CommentEditSaveProps {
-	comment: string,
-	setComment: (event: string) => any,
-	save: () => any,
-	error: string,
-	displayMessage?: string,
+	id?: string,
+	modeIsAdd?: boolean,
 };
 
-const CommentEditSave = ({
-	comment,
-	setComment,
-	save,
-	error,
-	displayMessage='',
-}: CommentEditSaveProps) => {
+const CommentEditSave = ({ id = '', modeIsAdd = false }: CommentEditSaveProps) => {
+	const { inputRef, addMode, commentId, content, setContent, save, error, displayMessage } = useCommentEdit();
+	if (modeIsAdd !== addMode || commentId !== id) return null;
 	return (
 		<>
 			<TextField
-				text={comment}
-				onChange={(event: React.ChangeEvent<HTMLInputElement>) => setComment(event.currentTarget.value)}
+				text={content}
+				onChange={(event: React.ChangeEvent<HTMLInputElement>) => setContent(event.currentTarget.value)}
+				ref={inputRef}
 			/>
 			<div className={styles.buttonContainer}>
 				<span className={error ? styles.error : styles.success}>
