@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import { Post } from "@customTypes/interfaces";
 import PostService from "@services/post_service";
 
 const usePostsAdmin = () => {
+	const isMounted = useRef<Boolean | null>(null);
+
 	const [data, setData] = useState<Post[]>();
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState<any>(); // cannot have typed catch variables
@@ -11,13 +13,18 @@ const usePostsAdmin = () => {
 	const getData = async () => {
 		try {
 			const result = await PostService.getPostsAll();
-			setData(result);
+			if (isMounted.current) setData(result);
 		} catch (err) {
-			setError(err);
+			if (isMounted.current) setError(err);
 		} finally {
-			setIsLoading(false);
+			if (isMounted.current) setIsLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		isMounted.current = true; // executed when mounted
+		return () => { isMounted.current = false; }; // executed when unmount
+	}, []);
 
 	useEffect(() => {
 		getData();

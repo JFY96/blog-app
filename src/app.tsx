@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import Nav from '@containers/nav/nav';
 import HomePage from '@pages/home-page/home-page';
@@ -18,7 +18,7 @@ const App = () => {
 	}, []);
 
 	return (
-		<BrowserRouter>
+		<>
 			<Nav />
 			<main>
 			{!attemptedLoginOnRefresh
@@ -52,7 +52,7 @@ const App = () => {
 				</Switch>
 			}
 			</main>
-		</BrowserRouter>
+		</>
 	);
 };
 
