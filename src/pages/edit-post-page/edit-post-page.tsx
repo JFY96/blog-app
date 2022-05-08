@@ -104,10 +104,12 @@ const EditPostPage = () => {
 							onClick={savePost}
 						/>
 					</div>
-					<label className={styles.label}>Preview</label>
-					<ReactMarkdown children={content} />
 					</>
 					}
+				</div>
+				<h2>Preview</h2>
+				<div className={styles.container}>
+					<ReactMarkdown children={content} />
 				</div>
 			</div>
 		</div>

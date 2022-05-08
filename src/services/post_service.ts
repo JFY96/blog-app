@@ -41,14 +41,20 @@ class PostService {
 	static publishPost = async (postId: string, publish = true): Promise<ApiMethodReturn> => {
 		return this.updatePost(postId, { published: publish });
 	};
-
+	
 	static createPost = async (title: string, content: string): Promise<ApiMethodReturn> => {
 		const { data } = await axiosInstance.post('posts', { title, content });
 		return data?.success
-			? { success: true } 
-			: { success: false, errors: data?.errors };
+		? { success: true } 
+		: { success: false, errors: data?.errors };
 	};
-
+	
+	static deletePost = async (postId: string): Promise<ApiMethodReturn> => {
+		const { data } = await axiosInstance.delete<{ success: boolean, postId?: any }>(`posts/${postId}`);
+		return data?.success
+			? { success: true } 
+			: { success: false, error: 'Failed to delete post' };
+	};
 }
 
 export default PostService;

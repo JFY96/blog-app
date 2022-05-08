@@ -16,6 +16,7 @@ interface CommentEditContextValue {
 	commentId: string,
 	content: string,
 	setContent: React.Dispatch<React.SetStateAction<string>>,
+	resetEdit: React.Dispatch<React.SetStateAction<string>>,
 	save: () => Promise<any>,
 	error: string,
 	displayMessage?: string,
@@ -28,7 +29,7 @@ const PostPage = () => {
 
 	const { data:post, isLoading:postsLoading, error:postError } = useFetch(() => PostService.getPost(postId));
 
-	const { data:comments, isLoading:commentsLoading, error:commentsError, add, update } = useComments(postId);
+	const { data:comments, isLoading:commentsLoading, error:commentsError, add, update, remove } = useComments(postId);
 
 	const [addMode, setAddMode] = useState(true);
 	const [commentId, setCommentId] = useState('');
@@ -53,15 +54,20 @@ const PostPage = () => {
 		setMessage('');
 		try {
 			if (addMode) {
-				const result = await add(content, name);
-				if (!result) throw new Error('Failed to update');
-				if (result.success) {
-					setName('');
-					setContent('');
-					setMessage('Comment was added!');
-				} else {
-					if (result.errors !== undefined) setError(result.errors[Object.keys(result.errors)[0]]); // Show first error - not ideal but simple solution
-					else setError('Failed to add comment');
+				// Validate
+				if (content.trim() === '') setError('Please enter a comment');
+				else {
+					// Save
+					const result = await add(content, name);
+					if (!result) throw new Error('Failed to update');
+					if (result.success) {
+						setName('');
+						setContent('');
+						setMessage('Comment was added!');
+					} else {
+						if (result.errors !== undefined) setError(result.errors[Object.keys(result.errors)[0]]); // Show first error - not ideal but simple solution
+						else setError('Failed to add comment');
+					}
 				}
 			} else {
 				const result = await update(commentId, content);
@@ -71,7 +77,7 @@ const PostPage = () => {
 				setCommentId('');
 			}
 		} catch {
-			setError('An error occurred while updating comment');
+			setError('An error occurred while processing comment');
 		}
 	};
 
@@ -89,6 +95,8 @@ const PostPage = () => {
 		setContent('');
 	};
 
+	const resetEdit = () => selectAddComment(true);
+
 	return (
 		<CommentEditContext.Provider value={{
 			inputRef,
@@ -97,6 +105,7 @@ const PostPage = () => {
 			content,
 			setContent,
 			save,
+			resetEdit,
 			error,
 			displayMessage: message,
 		}}>
@@ -108,7 +117,7 @@ const PostPage = () => {
 						setName={setName}
 						adding={addMode && commentId===''}
 						selectAdding={() => selectAddComment(false)}
-						resetAdding={() => selectAddComment(true)}
+						resetAdding={resetEdit}
 					/>
 					{commentsLoading 
 					? 'Loading Comments...'
@@ -120,6 +129,7 @@ const PostPage = () => {
 							comment={comment}
 							editComment={commentId===comment.id}
 							selectEditComment={() => selectEditComment(comment)}
+							removeComment={() => remove(comment.id)}
 						/>
 					)
 					}

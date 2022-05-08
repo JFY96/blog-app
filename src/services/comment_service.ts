@@ -38,6 +38,13 @@ class CommentService {
 			? { success: true } 
 			: { success: false, errors: data?.errors };
 	};
+
+	static deleteComment = async (postId: string, commentId: string): Promise<ApiMethodReturn> => {
+		const { data } = await axiosInstance.delete<{ success: boolean, errors?: any }>(`posts/${postId}/comments/${commentId}`);
+		return data?.success
+			? { success: true } 
+			: { success: false, errors: data?.errors };
+	};
 }
 
 export default CommentService;

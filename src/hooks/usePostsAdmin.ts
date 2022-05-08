@@ -40,11 +40,22 @@ const usePostsAdmin = () => {
 		}
 	};
 
+	const remove = async (postId: string) => {
+		try {
+			const result = await PostService.deletePost(postId);
+			if (result.success) getData();
+			return result;
+		} catch (err) {
+			setError(err);
+		}
+	};
+
 	return {
 		data,
 		isLoading,
 		error,
 		publish,
+		remove,
 	};
 };
 

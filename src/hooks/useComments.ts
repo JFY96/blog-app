@@ -43,6 +43,16 @@ const useComments = (postId: string) => {
 			setError(err);
 		}
 	};
+	
+	const remove = async (commentId: string) => {
+		try {
+			const result = await CommentService.deleteComment(postId, commentId);
+			if (result.success) getData();
+			return result;
+		} catch (err) {
+			setError(err);
+		}
+	};
 
 	return {
 		data,
@@ -50,6 +60,7 @@ const useComments = (postId: string) => {
 		error,
 		add,
 		update,
+		remove,
 	};
 };
 

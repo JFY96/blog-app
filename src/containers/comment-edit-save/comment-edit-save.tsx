@@ -10,7 +10,7 @@ interface CommentEditSaveProps {
 };
 
 const CommentEditSave = ({ id = '', modeIsAdd = false }: CommentEditSaveProps) => {
-	const { inputRef, addMode, commentId, content, setContent, save, error, displayMessage } = useCommentEdit();
+	const { inputRef, addMode, commentId, content, setContent, save, resetEdit, error, displayMessage } = useCommentEdit();
 	if (modeIsAdd !== addMode || commentId !== id) return null;
 	return (
 		<>
@@ -23,11 +23,22 @@ const CommentEditSave = ({ id = '', modeIsAdd = false }: CommentEditSaveProps) =
 				<span className={error ? styles.error : styles.success}>
 					{error || displayMessage}
 				</span>
+				<div>
+				{!modeIsAdd &&
+					<>
+					<Button
+						text='Cancel'
+						onClick={resetEdit}
+					/>
+					<span> </span>
+					</>
+				}
 				<Button
 					text='Submit'
 					enterKeyClicksButton={true}
 					onClick={save}
 				/>
+				</div>
 			</div>
 		</>
 	);

@@ -30,7 +30,7 @@ const Nav = () => {
 						Admin
 					</Link>
 					}
-					<AlertDialog 
+					<AlertDialog // TODO Refactor to use single alertdialog for whole application
 						open={logoutDialogOpen}
 						close={() => setLogoutDialogOpen(false)}
 						confirm={async () => {
