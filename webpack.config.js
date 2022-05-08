@@ -7,7 +7,7 @@ module.exports = (env) => ({
 	output: {
 		filename: 'main.js',
 		path: path.resolve(__dirname, 'build'),
-		publicPath: '/',
+		publicPath: env.ENVIRONMENT === 'development' ? '/' : './',
 	},
 	resolve: {
 		modules: [path.join(__dirname, 'src'), 'node_modules'],
